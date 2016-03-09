@@ -4,7 +4,7 @@ using System.Collections;
 public class GameHandler : MonoBehaviour {
 
 	private float HuntCooldown = 900;
-	private float HuntTimer;
+	public float HuntTimer;
 	private bool HuntReady = false;
 
 	// Use this for initialization
