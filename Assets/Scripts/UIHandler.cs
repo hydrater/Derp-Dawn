@@ -12,6 +12,9 @@ public class UIHandler : MonoBehaviour {
 	GameObject HuntButton;
 	GameObject TravelButton;
 	GameObject InventoryButton;
+	GameObject ShopButton;
+
+	bool MapOpen = false;
 
 	[SerializeField] GameObject button;
 
@@ -32,6 +35,7 @@ public class UIHandler : MonoBehaviour {
 		UIButton.transform.SetParent(canvas.transform);
 		UIButton.GetComponent<RectTransform> ().localPosition = buttonPosition;
 		UIButton.GetComponentInChildren<Text> ().text = "Hunt " + gameHandler.GetHuntTimer ();
+		UIButton.name = "Hunt Button";
 		HuntButton = UIButton;
 
 		// Travel button
@@ -43,7 +47,8 @@ public class UIHandler : MonoBehaviour {
 		UIButton.transform.SetParent(canvas.transform);
 		UIButton.GetComponent<RectTransform> ().localPosition = buttonPosition;
 		UIButton.GetComponentInChildren<Text> ().text = "Travel";
-
+		UIButton.GetComponent<Button> ().onClick.AddListener (ToggleMap);
+		UIButton.name = "Travel Button";
 		TravelButton = UIButton;
 
 		// Inventory button
@@ -55,12 +60,38 @@ public class UIHandler : MonoBehaviour {
 		UIButton.transform.SetParent(canvas.transform);
 		UIButton.GetComponent<RectTransform> ().localPosition = buttonPosition;
 		UIButton.GetComponentInChildren<Text> ().text = "Inventory";
-
+		UIButton.name = "Inventory Button";
 		InventoryButton = UIButton;
+
+
+		// Shop button
+		buttonPosition.Set (-width * 0.5f + button.GetComponent<RectTransform>().rect.width * 0.5f,
+		                    height * 0.5f - button.GetComponent<RectTransform>().rect.height * 2.5f,
+		                    0);
+		
+		UIButton = (GameObject)Instantiate (button, Vector3.zero, Quaternion.identity);
+		UIButton.transform.SetParent(canvas.transform);
+		UIButton.GetComponent<RectTransform> ().localPosition = buttonPosition;
+		UIButton.GetComponentInChildren<Text> ().text = "Shop";
+		UIButton.name = "Shop Button";
+		ShopButton = UIButton;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		HuntButton.GetComponentInChildren<Text>().text = "Hunt " + (int)(gameHandler.GetHuntTimer ());
+	}
+
+	void ToggleMap()
+	{
+		if (MapOpen) {
+			MapOpen = false;
+			canvas.transform.FindChild ("main").gameObject.SetActive (true);
+			canvas.transform.FindChild ("map").gameObject.SetActive (false);
+		} else {
+			MapOpen = true;
+			canvas.transform.FindChild ("main").gameObject.SetActive (false);
+			canvas.transform.FindChild ("map").gameObject.SetActive (true);
+		}
 	}
 }
