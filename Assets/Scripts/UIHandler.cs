@@ -26,7 +26,7 @@ public class UIHandler : MonoBehaviour {
 		width = canvas.GetComponent<RectTransform> ().rect.width;
 		height = canvas.GetComponent<RectTransform> ().rect.height;
 
-		HuntButton = GameObject.Find ("Hunt Button");
+		HuntButton = canvas.transform.FindChild("sidebar").FindChild ("Hunt Button").gameObject;
 	}
 	
 	// Update is called once per frame
